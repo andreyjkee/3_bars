@@ -57,15 +57,15 @@ if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option('-f', '--file', type='string', dest='filepath')
     (options, args) = parser.parse_args()
-    data = load_data(options.filepath)
-    print('Biggest bar: ', get_biggest_bar(data))
-    print('Smallest bar: ', get_smallest_bar(data))
+    json_content = load_data(options.filepath)
+    print('Biggest bar: ', get_biggest_bar(json_content))
+    print('Smallest bar: ', get_smallest_bar(json_content))
     print('Please input your latitude coordinate:')
-    lat = input()
-    if not is_correct_latitude(lat):
+    latitude = input()
+    if not is_correct_latitude(latitude):
         raise InvalidInputLatitudeException({'message': 'Incorrect latitude coordinate'})
     print('Please input your longitude coordinate:')
-    lon = input()
-    if not is_correct_longitude(lon):
+    longitude = input()
+    if not is_correct_longitude(longitude):
         raise InvalidInputLongitudeException({'message': 'Incorrect longitude coordinate'})
-    print('Closest bar: ', get_closest_bar(data, lat, lon))
+    print('Closest bar: ', get_closest_bar(json_content, latitude, longitude))
