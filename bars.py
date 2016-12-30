@@ -21,7 +21,7 @@ def get_smallest_bar(data):
 
 
 def get_closest_bar(data, latitude, longitude):
-    return min(data, key=lambda bar: get_distance(latitude, longitude, bar['Longitude_WGS84'], bar['Latitude_WGS84']))
+    return min(data, key=lambda bar: get_distance(latitude, longitude, bar['Latitude_WGS84'], bar['Longitude_WGS84']))
 
 def get_distance(lat1, lon1, lat2, lon2):
     lat1_r = radians(float(lat1))
