@@ -1,4 +1,5 @@
 import json
+import os
 from math import sin, cos, sqrt, atan2, radians
 from optparse import OptionParser
 
@@ -6,11 +7,10 @@ from optparse import OptionParser
 def load_data(filepath):
     if not filepath:
         raise Exception('Не указан путь к файлу')
-    try:
-        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
-            return json.loads(f.read())
-    except FileNotFoundError:
-        print('Файл : ', filepath, 'не найден')
+    if not os.path.exists(filepath):
+        raise Exception('Файл {0} не найден'.format(filepath))
+    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+        return json.loads(f.read())
 
 def get_biggest_bar(data):
     return max(data, key=lambda bar: bar['SeatsCount'] and bar['TypeObject'] == 'бар')
@@ -45,14 +45,6 @@ def is_correct_longitude(longitude):
     return -180 <= float(longitude) <= 180
 
 
-class InvalidInputLatitudeException(Exception):
-    pass
-
-
-class InvalidInputLongitudeException(Exception):
-    pass
-
-
 if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option('-f', '--file', type='string', dest='filepath')
@@ -63,9 +55,9 @@ if __name__ == '__main__':
     print('Please input your latitude coordinate:')
     latitude = input()
     if not is_correct_latitude(latitude):
-        raise InvalidInputLatitudeException({'message': 'Incorrect latitude coordinate'})
+        raise Exception({'message': 'Incorrect latitude coordinate'})
     print('Please input your longitude coordinate:')
     longitude = input()
     if not is_correct_longitude(longitude):
-        raise InvalidInputLongitudeException({'message': 'Incorrect longitude coordinate'})
+        raise Exception({'message': 'Incorrect longitude coordinate'})
     print('Closest bar: ', get_closest_bar(json_content, latitude, longitude))
