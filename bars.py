@@ -56,7 +56,7 @@ class InvalidInputLongitudeException(Exception):
 if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option('-f', '--file', type='string', dest='filepath')
-    (options, args) = parser.parse_args()
+    options, args = parser.parse_args()
     json_content = load_data(options.filepath)
     print('Biggest bar: ', get_biggest_bar(json_content))
     print('Smallest bar: ', get_smallest_bar(json_content))
